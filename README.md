@@ -1,10 +1,32 @@
-<img src="https://github.com/contiki-ng/contiki-ng.github.io/blob/master/images/logo/Contiki_logo_2RGB.png" alt="Logo" width="256">
 
 这个是一个学习Contiki内核的过程，学习使用Wiki文档
 
 ![](./assets/img/logo/c.svg)
+###
 
-## 入门知识
+====== Contiki操作系统 ======
+mini-printf.h中引出void UARTwrite(char * pcString, int ulIdx);直接打印缓冲区的内容
+
+20210523 修改contiki.h,改正没有define FPRINT时，编译出错的问题。
+====== Contiki-ng ======
+|[[https://docs.contiki-ng.org/en/master/doc/programming/Porting-Contiki-NG-to-new-platforms.html#create-some-examples|文档]]|[[https://github.com/fengjikui/contiki-ng/wiki/Contiki%E2%80%90NG%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F|中文文档1]]|
+|[[https://docs.contiki-ng.org/en/develop/|develop]]|[[https://github.com/fengjikui/contiki-ng/wiki|中文维基]]|
+|[[https://www.cnblogs.com/lijianGX/p/15414013.html|教程]]|[[https://github.com/tperale/sx128x|sx128X]]|
+
+
+====== 获得一个最简版的内核 ======
+
+|[[https://github.com/smartmx/ProtoThread-Core|ProtoThread-Core]]|
+在这个网址上已经把最简版的协程做了出来。但作者已经不再维护这个程序了，这个程序只存活了几个月。它可以使用，但我想要的是最新版的、可升级的一个内核。
+
+===== os/sys =====
+这个文件夹下的所有内容我将其全部保留，它就是Contiki的内核，但它调用了许多os下dev、lib、net、services、storage、sys的.h文件。
+  - 进入os文件夹，删除所有的.c文件，执行:find . -iname "*.c" |xargs rm
+  - 进入os/sys，恢复所有的文件，执行:git c .
+  - 增加contiki.h,在此文件中增加平台定义的类型sys.h
+  - 增加rtimer-arch.h
+
+### 入门知识
 
 基本功很重要
 
@@ -19,7 +41,7 @@
 
 ---
 
-## 基础开发知识
+### 基础开发知识
 
 - 字符编码 - 没啥好说的,基本功
     - 略
@@ -39,201 +61,6 @@
 
 ---
 
-## WEB开发
-
-- dotnet
-    - 暂时还没学完 : )
-
-- java
-    - 暂时还没学完 : )
-
-- php
-    - 暂时还没学完 : )
-
----
-
-## 基础运维知识
-
-### Linux运维
-
-- Linux 是啥
-    - [发行版](./1earn/Integrated/Linux/笔记/发行版.md)
-    - [进程](./1earn/Integrated/Linux/笔记/进程.md)
-
-- Linux 基础命令
-    - [Speed-Linux](./1earn/Integrated/Linux/Speed-Linux.md)
-
-- Linux 服务搭建 - 起码要学会怎么搭建 httpd、nginx
-    - [Power-Linux](./1earn/Integrated/Linux/Power-Linux.md)
-
-- Docker 使用 - 必须要掌握的,可以节约你大量时间
-    - [Speed-Docker](./1earn/Integrated/虚拟化/Docker/Speed-Docker.md)
-
-### 网络知识
-
-- TCP/IP 模型 - 需要明白什么是IP、MAC，各层的常见协议有哪些分别什么作用
-    - 略
-
-### Windows服务器
-
-- Windows 下常用命令
-    - [Speed-Win](./1earn/Integrated/Windows/Speed-Win.md)
-
-- Windows 服务器能干啥
-    - [Windows基础服务搭建](./1earn/Integrated/Windows/实验/Windows基础服务搭建.md)
-
----
-
-## web基础
-
-- HTTP 协议
-    - 略
-
-- html+js
-    - 略
-
-- web 基础漏洞
-    - [Web_Generic](./1earn/Security/RedTeam/Web安全/Web_Generic/Web_Generic.md)
-
-- web 逻辑漏洞
-    - [IDOR](./1earn/Security/RedTeam/Web安全/IDOR.md)
-
-- 靶场 - 如果有空闲时间可以打打靶场练习
-    - [靶场](https://github.com/No-Github/1earn/tree/master/1earn/Security/RedTeam/Web%E5%AE%89%E5%85%A8/%E9%9D%B6%E5%9C%BA)
-
-## web进阶
-
-- 各类通用漏洞利用
-    - [BS-Exploits](./1earn/Security/RedTeam/Web安全/BS-Exploits.md)
-
-- OOB
-    - [OOB](./1earn/Security/RedTeam/Web安全/Web_Tricks/OOB.md)
-
-- JWT
-    - [JWT安全](./1earn/Security/RedTeam/Web安全/Web_Tricks/JWT安全.md)
-
-## 代码审计
-
-- 暂时还没学完 : )
-
----
-
-## 主机安全
-
-### linux
-
-- linux 权限、文件
-    - [认证](./1earn/Integrated/Linux/笔记/认证.md)
-    - [文件](./1earn/Integrated/Linux/笔记/文件.md)
-
-- linux 提权、漏洞利用
-    - [OS-Exploits](./1earn/Security/RedTeam/OS安全/OS-Exploits.md#linux)
-
-- linux lol
-    - [Linux安全](./1earn/Security/RedTeam/OS安全/Linux安全.md#lol)
-
-### windows
-
-- windows 认证体系
-    - [认证](./1earn/Integrated/Windows/笔记/认证.md)
-
-- windows 提权、漏洞利用
-    - [OS-Exploits](./1earn/Security/RedTeam/OS安全/OS-Exploits.md#windows)
-
-- windows lol
-    - [Windows-LOL](./1earn/Security/RedTeam/OS安全/实验/Windows-LOL.md)
-
-- windows rdp 利用
-    - [Windows安全](./1earn/Security/RedTeam/OS安全/Windows安全.md#rdp)
-
-- windows 凭证抓取
-    - [Windows安全](./1earn/Security/RedTeam/OS安全/Windows安全.md#认证)
-
----
-
-## 后渗透
-
-### 权限提升
-
-- linux 提权
-    - [OS-Exploits](./1earn/Security/RedTeam/OS安全/OS-Exploits.md#linux)
-
-- windows 提权
-    - [OS-Exploits](./1earn/Security/RedTeam/OS安全/OS-Exploits.md#windows)
-
-- 第三方软件提权
-    - [权限提升](./1earn/Security/RedTeam/后渗透/权限提升.md)
-
-### 权限维持
-
-- 各种 webshell
-    - [权限维持](./1earn/Security/RedTeam/后渗透/权限维持.md#web)
-
-- windows 权限维持
-    - [权限维持](./1earn/Security/RedTeam/后渗透/权限维持.md#win)
-
-- linux 权限维持
-    - [权限维持](./1earn/Security/RedTeam/后渗透/权限维持.md#linux)
-
-- 各类 C2、免杀
-    - [权限维持](./1earn/Security/RedTeam/后渗透/权限维持.md#c2-rat)
-
-### windows 域
-
-- 工作组、域是什么、如何搭建域环境
-    - [工作组](./1earn/Integrated/Windows/笔记/工作组.md)
-    - [域](./1earn/Integrated/Windows/笔记/域.md)
-    - [Windows 域搭建](./1earn/Integrated/Windows/实验/Windows域搭建.md)
-
-- Kerberos
-    - [认证](./1earn/Integrated/Windows/笔记/认证.md#域认证)
-
-- 域凭证抓取
-    - [Windows安全](./1earn/Security/RedTeam/OS安全/Windows安全.md#域)
-
-- 域控提权
-    - [OS-Exploits](./1earn/Security/RedTeam/OS安全/OS-Exploits.md#域)
-
-- pth/k/t
-    - [PTH](./1earn/Security/RedTeam/OS安全/Windows安全.md#pth)
-    - [PTT](./1earn/Security/RedTeam/OS安全/Windows安全.md#ptt)
-
-- Exchange
-    - [Exchange 搭建](./1earn/Integrated/Windows/实验/Exchange搭建.md)
-    - [Exchange](./1earn/Security/RedTeam/后渗透/实验/Exchange.md)
-
----
-
-## 蓝队技能
-
-### 蓝队服务搭建
-
-### 分析技术
-
-- linux 日志、信息
-    - [日志](./1earn/Integrated/Linux/笔记/日志.md)
-    - [信息](./1earn/Integrated/Linux/笔记/信息.md)
-
-- windows 日志、信息
-    - [日志](./1earn/Integrated/Windows/笔记/日志.md)
-    - [信息](./1earn/Integrated/Windows/笔记/信息.md)
-
-- 恶意文件分析
-    - [分析](./1earn/Security/BlueTeam/分析.md)
-
-### 取证技术
-
-- 文件取证
-    - [取证](./1earn/Security/BlueTeam/取证.md#文件取证)
-
-- 内存取证
-    - [内存取证](./1earn/Security/BlueTeam/笔记/内存取证.md)
-
-- 流量分析
-    - [流量分析](./1earn/Security/BlueTeam/实验/流量分析.md)
-
-- 应用程序、WEB、数据库取证
-    - [取证](./1earn/Security/BlueTeam/取证.md#应用程序取证)
 
 Find out more:
 
@@ -249,5 +76,8 @@ Engage with the community:
 * Gitter: https://gitter.im/contiki-ng
 * Twitter: https://twitter.com/contiki_ng
 
+---
+
+#### 更改
 2024-04-28 11:00 我准备学习它并精简它，只跟踪并保留os/sys/下的所有文件，其它不必要的文件全部删除，用来在Cmake的环境下学习Contiki内核。
 
