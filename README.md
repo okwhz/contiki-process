@@ -36,3 +36,6 @@ Engage with the community:
 * Contiki-NG tag on Stack Overflow: https://stackoverflow.com/questions/tagged/contiki-ng
 * Gitter: https://gitter.im/contiki-ng
 * Twitter: https://twitter.com/contiki_ng
+
+2024-04-28 11:00 我准备学习它并精简它，只跟踪并保留os/sys/下的所有文件，其它不必要的文件全部删除，用来在Cmake的环境下学习Contiki内核。
+
