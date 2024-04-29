@@ -4,9 +4,7 @@
 ![](assets/img/logo/c.svg)
 
 # Contiki操作系统
-mini-printf.h中引出void UARTwrite(char * pcString, int ulIdx);直接打印缓冲区的内容
-
-20210523 修改contiki.h,改正没有define FPRINT时，编译出错的问题。
+2024-04-29 11:38 增加了一个空的文件 os/services/test.h,否则编译时头文件路径不对
 # Contiki-ng
 [中文文档1](https://docs.contiki-ng.org/en/master/doc/programming/Porting-Contiki-NG-to-new-platforms.html#create-some-examples]])
 [中文文档](https://github.com/fengjikui/contiki-ng/wiki/Contiki%E2%80%90NG%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F)
