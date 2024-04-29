@@ -1,30 +1,33 @@
 
 这个是一个学习Contiki内核的过程，学习使用Wiki文档
 
-![](./assets/img/logo/c.svg)
-###
+![](assets/img/logo/c.svg)
 
-====== Contiki操作系统 ======
+# Contiki操作系统
 mini-printf.h中引出void UARTwrite(char * pcString, int ulIdx);直接打印缓冲区的内容
 
 20210523 修改contiki.h,改正没有define FPRINT时，编译出错的问题。
-====== Contiki-ng ======
-|[[https://docs.contiki-ng.org/en/master/doc/programming/Porting-Contiki-NG-to-new-platforms.html#create-some-examples|文档]]|[[https://github.com/fengjikui/contiki-ng/wiki/Contiki%E2%80%90NG%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F|中文文档1]]|
-|[[https://docs.contiki-ng.org/en/develop/|develop]]|[[https://github.com/fengjikui/contiki-ng/wiki|中文维基]]|
-|[[https://www.cnblogs.com/lijianGX/p/15414013.html|教程]]|[[https://github.com/tperale/sx128x|sx128X]]|
+# Contiki-ng
+[中文文档1](https://docs.contiki-ng.org/en/master/doc/programming/Porting-Contiki-NG-to-new-platforms.html#create-some-examples]])
+[中文文档](https://github.com/fengjikui/contiki-ng/wiki/Contiki%E2%80%90NG%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F)
+[中文维基](https://docs.contiki-ng.org/en/develop/|develop)
+[中文维基1](https://github.com/fengjikui/contiki-ng/wiki)
+[sx128X](https://github.com/tperale/sx128x)
+[教程](https://www.cnblogs.com/lijianGX/p/15414013.html)
 
 
-====== 获得一个最简版的内核 ======
+# 获得一个最简版的内核
 
-|[[https://github.com/smartmx/ProtoThread-Core|ProtoThread-Core]]|
+|[ProtoThread-Core](https://github.com/smartmx/ProtoThread-Core)|
 在这个网址上已经把最简版的协程做了出来。但作者已经不再维护这个程序了，这个程序只存活了几个月。它可以使用，但我想要的是最新版的、可升级的一个内核。
 
-===== os/sys =====
+## os/sys
 这个文件夹下的所有内容我将其全部保留，它就是Contiki的内核，但它调用了许多os下dev、lib、net、services、storage、sys的.h文件。
-  - 进入os文件夹，删除所有的.c文件，执行:find . -iname "*.c" |xargs rm
-  - 进入os/sys，恢复所有的文件，执行:git c .
-  - 增加contiki.h,在此文件中增加平台定义的类型sys.h
-  - 增加rtimer-arch.h
+
+- 进入os文件夹，删除所有的.c文件，执行:find . -iname "*.c" |xargs rm
+- 进入os/sys，恢复所有的文件，执行:git c .
+- 增加contiki.h,在此文件中增加平台定义的类型sys.h
+- 增加rtimer-arch.h
 
 ### 入门知识
 
