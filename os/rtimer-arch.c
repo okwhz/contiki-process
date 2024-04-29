@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004, Swedish Institute of Computer Science.
+ * Copyright (c) 2007, Swedish Institute of Computer Science.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,32 +28,59 @@
  *
  * This file is part of the Contiki operating system.
  *
- * Author: Adam Dunkels <adam@sics.se>
- *
  */
-#ifndef CONTIKI_H_
-#define CONTIKI_H_
 
-#include "contiki-conf.h"
-#include "contiki-default-conf.h"
+/**
+ * \file
+ *         Native (non-specific) code for the Contiki real-time module rt
+ * \author
+ *         Adam Dunkels <adam@sics.se>
+ */
 
-#include "sys/process.h"
-#include "sys/autostart.h"
+#include <signal.h>
+#include <sys/time.h>
+#include <stddef.h>
 
-#include "sys/timer.h"
-#include "sys/ctimer.h"
-#include "sys/etimer.h"
 #include "sys/rtimer.h"
-
-#include "sys/pt.h"
-
 #include "sys/clock.h"
-#include "sys.h"
-#define  CLOCK_CONF_SIZE 4
-#define  CLOCK_TARGET_STRING " "
-#define  FPRINTF(...)
-#define  PRINTF(...)
-#define  mini_snprintf(...)
-#define  FUARTprintf(...)
 
-#endif /* CONTIKI_H_ */
+#define DEBUG 0
+#if DEBUG
+#include <stdio.h>
+#define PRINTF(...) printf(__VA_ARGS__)
+#else
+#define PRINTF(...)
+#endif
+
+/*---------------------------------------------------------------------------*/
+static void
+interrupt(int sig)
+{
+  signal(sig, interrupt);
+  rtimer_run_next();
+}
+/*---------------------------------------------------------------------------*/
+void
+rtimer_arch_init(void)
+{
+  signal(SIGALRM, interrupt);
+}
+/*---------------------------------------------------------------------------*/
+void
+rtimer_arch_schedule(rtimer_clock_t t)
+{
+  struct itimerval val;
+  rtimer_clock_t c;
+
+  c = t - clock_time();
+  
+  val.it_value.tv_sec = c / CLOCK_SECOND;
+  val.it_value.tv_usec = (c % CLOCK_SECOND) * CLOCK_SECOND;
+
+  PRINTF("rtimer_arch_schedule time %"PRIu32 " %"PRIu32 " in %ld.%ld seconds\n",
+         t, c, (long)val.it_value.tv_sec, (long)val.it_value.tv_usec);
+
+  val.it_interval.tv_sec = val.it_interval.tv_usec = 0;
+  setitimer(ITIMER_REAL, &val, NULL);
+}
+/*---------------------------------------------------------------------------*/

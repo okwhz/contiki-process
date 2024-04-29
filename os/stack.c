@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004, Swedish Institute of Computer Science.
+ * Copyright (c) 2017, University of Bristol - http://www.bris.ac.uk/
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,34 +26,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * This file is part of the Contiki operating system.
- *
- * Author: Adam Dunkels <adam@sics.se>
- *
  */
-#ifndef CONTIKI_H_
-#define CONTIKI_H_
 
-#include "contiki-conf.h"
-#include "contiki-default-conf.h"
+/**
+ * \addtogroup stack
+ * @{
+ */
 
-#include "sys/process.h"
-#include "sys/autostart.h"
+/**
+ * \file
+ *     Implementation of the stack checker library.
+ * \author
+ *     Atis Elsts <atis.elsts@bristol.ac.uk>
+ */
 
-#include "sys/timer.h"
-#include "sys/ctimer.h"
-#include "sys/etimer.h"
-#include "sys/rtimer.h"
-
-#include "sys/pt.h"
-
-#include "sys/clock.h"
-#include "sys.h"
-#define  CLOCK_CONF_SIZE 4
-#define  CLOCK_TARGET_STRING " "
-#define  FPRINTF(...)
-#define  PRINTF(...)
-#define  mini_snprintf(...)
-#define  FUARTprintf(...)
-
-#endif /* CONTIKI_H_ */
+int _stack_origin;
+int _stack;

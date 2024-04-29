@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004, Swedish Institute of Computer Science.
+ * Copyright (c) 2007, Swedish Institute of Computer Science.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,32 +28,22 @@
  *
  * This file is part of the Contiki operating system.
  *
- * Author: Adam Dunkels <adam@sics.se>
- *
  */
-#ifndef CONTIKI_H_
-#define CONTIKI_H_
 
-#include "contiki-conf.h"
-#include "contiki-default-conf.h"
+/**
+ * \file
+ *         A brief description of what this file is.
+ * \author
+ *         Adam Dunkels <adam@sics.se>
+ */
 
-#include "sys/process.h"
-#include "sys/autostart.h"
+#ifndef RTIMER_ARCH_H_
+#define RTIMER_ARCH_H_
 
-#include "sys/timer.h"
-#include "sys/ctimer.h"
-#include "sys/etimer.h"
-#include "sys/rtimer.h"
+#include "contiki.h"
 
-#include "sys/pt.h"
+#define RTIMER_ARCH_SECOND CLOCK_CONF_SECOND
 
-#include "sys/clock.h"
-#include "sys.h"
-#define  CLOCK_CONF_SIZE 4
-#define  CLOCK_TARGET_STRING " "
-#define  FPRINTF(...)
-#define  PRINTF(...)
-#define  mini_snprintf(...)
-#define  FUARTprintf(...)
+#define rtimer_arch_now() clock_time()
 
-#endif /* CONTIKI_H_ */
+#endif /* RTIMER_ARCH_H_ */

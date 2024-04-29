@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2017, George Oikonomou - http://www.spd.gr
+ * Copyright (c) 2018, George Oikonomou - http://www.spd.gr
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived
  *    from this software without specific prior written permission.
@@ -29,79 +29,11 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*---------------------------------------------------------------------------*/
-/**
- * \addtogroup main
- * @{
- */
+#ifndef NATIVE_DEF_H_
+#define NATIVE_DEF_H_
 /*---------------------------------------------------------------------------*/
-/**
- * \file
- *
- * Implementation of \os's main routine
- */
+#define GPIO_HAL_CONF_ARCH_SW_TOGGLE     1
+#define GPIO_HAL_CONF_PORT_PIN_NUMBERING 0
 /*---------------------------------------------------------------------------*/
-#include "contiki.h"
-/* #include "contiki-net.h" */
-/* #include "sys/node-id.h" */
-#include "sys/platform.h"
-/* #include "sys/energest.h" */
-/* #include "sys/stack-check.h" */
-/* #include "dev/watchdog.h" */
-
-/* #include "net/queuebuf.h" */
-/* #include "net/app-layer/coap/coap-engine.h" */
-/* #include "net/app-layer/snmp/snmp.h" */
-/* #include "services/rpl-border-router/rpl-border-router.h" */
-/* #include "services/orchestra/orchestra.h" */
-/* #include "services/shell/serial-shell.h" */
-/* #include "services/simple-energest/simple-energest.h" */
-/* #include "services/tsch-cs/tsch-cs.h" */
-
-#include <stdio.h>
-#include <stdint.h>
+#endif /* NATIVE_DEF_H_ */
 /*---------------------------------------------------------------------------*/
-/* Log configuration */
-/* #include "sys/log.h" */
-#define LOG_INFO(...)
-#define LOG_INFO_(...)
-#define LOG_DBG(...)
-#define LOG_DBG_(...)
-#define LOG_MODULE "Main"
-#define LOG_LEVEL LOG_LEVEL_MAIN
-PROCESS_NAME(hello_world_process);
-/*---------------------------------------------------------------------------*/
-int
-#if PLATFORM_MAIN_ACCEPTS_ARGS
-main(int argc, char **argv)
-{
-  platform_process_args(argc, argv);
-#else
-main(void)
-{
-#endif
-  /* platform_init_stage_one(); */
-
-  clock_init();
-  process_init();
-  process_start(&etimer_process, NULL);
-  process_start(&hello_world_process, NULL);
-#if PLATFORM_PROVIDES_MAIN_LOOP
-  platform_main_loop();
-#else
-  while(1) {
-    process_num_events_t r;
-    do {
-      r = process_run();
-      /* watchdog_periodic(); */
-    } while(r > 0);
-
-    /* platform_idle(); */
-  }
-#endif
-
-  return 0;
-}
-/*---------------------------------------------------------------------------*/
-/**
- * @}
- */

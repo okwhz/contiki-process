@@ -5,6 +5,7 @@
 
 # Contiki操作系统
 2024-04-29 11:38 增加了一个空的文件 os/services/test.h,否则编译时头文件路径不对
+2024-04-29 17:09 增加了一个stack.c，里面定义了两个变量， int _stack_origin; int _stack;当前这个版本在Bionic Puppy中能正确编译Hello_Word.c程序了，但还不能连续输出HelloWorld，只输出一个字符串。
 # Contiki-ng
 [中文文档1](https://docs.contiki-ng.org/en/master/doc/programming/Porting-Contiki-NG-to-new-platforms.html#create-some-examples]])
 [中文文档](https://github.com/fengjikui/contiki-ng/wiki/Contiki%E2%80%90NG%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F)

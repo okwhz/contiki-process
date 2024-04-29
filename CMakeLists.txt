@@ -154,10 +154,8 @@ configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/config.h
   @ONLY
   )
-
-
 # add a directory with header files to see the generated file
-include_directories ($ {CMAKE_CURRENT_BINARY_DIR})
+# include_directories (${CMAKE_CURRENT_BINARY_DIR})
 message("GIT_CID:${GIT_COMMAND_ID}")
 message("COMPILE_TIME:${COMPILE_TIME}")
 #}
@@ -210,7 +208,7 @@ ENDMACRO()
 
 #HEADERS
 HEADER_DIRECTORIES(INC)
-INCLUDE_DIRECTORIES(arch/platform/native/ ${INC})
+INCLUDE_DIRECTORIES(. ${INC})
 # INCLUDE_DIRECTORIES(/b/program/c/debug/ /b/program/c/minicsv_c/)
 
 # 绝对引入
@@ -240,13 +238,13 @@ MESSAGE("SRCS:" ${SRCS})
 # SET(SRCS ${SRCS} ${SRCS1})
 
 FILE(GLOB_RECURSE SRC1 ./os/sys/*.c)
-FILE(GLOB_RECURSE SRC2 ./arch/platform/native/clock.c)
+AUX_SOURCE_DIRECTORY(os SRC2)
 
 # STRING(REGEX REPLACE "[^;]*CMAKEFILES/[^;]+;?" "" SRC "${SRC}")
 # file(GLOB_RECURSE sources CONFIGURE_DEPENDS *.cpp *.h)
 # MESSAGE("sources:"${sources})
 # LIST(REMOVE_ITEM SRC ${PENDING}) #新生成的SRCS就不包括pending目录的源文件了
-SET(SRCS ${SRCS} ${SRC1} ${SRC2})
+SET(SRCS ${SRCS} ${SRC1} ${SRC2} os/lib/list.c os/net/linkaddr.c)
 LIST(REMOVE_ITEM SRCS ${PENDING}) #SRCS就不包括pending目录的源文件
 LIST(REMOVE_DUPLICATES SRCS)
 
