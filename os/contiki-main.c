@@ -48,8 +48,7 @@
 /*---------------------------------------------------------------------------*/
 PROCESS_NAME(hello_world_process);
 /*---------------------------------------------------------------------------*/
-int
-main(void)
+int main(void)
 {
     /* platform_init_stage_one(); */
     clock_init();
@@ -62,16 +61,8 @@ main(void)
 
         do {
             r = process_run();
-            usleep(100000);
-
-            if(etimer_pending()) {
-                etimer_request_poll();
-            }
-
-            /* watchdog_periodic(); */
-        } while(r > 0);
-
-        /* platform_idle(); */
+            usleep(100000); /* if(etimer_pending())//此语句加上减少一点运行时间 */ etimer_request_poll(); /* watchdog_periodic(); */
+        } while(r > 0); /* platform_idle(); */
     }
 
     return 0;
