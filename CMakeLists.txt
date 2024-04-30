@@ -136,8 +136,8 @@ get_git_branch(GIT_BRANCH)
 message(STATUS "Git branch is ${GIT_BRANCH}")
 
 # Add the variables we need
-set (VERSION_MAJOR 2)
-set (VERSION_MINOR 30)
+set (VERSION_MAJOR 1)
+set (VERSION_MINOR 01)
 set (SOFT_VERSION \"V${VERSION_MAJOR}.${VERSION_MINOR}\")
 
 

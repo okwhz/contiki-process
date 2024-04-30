@@ -98,3 +98,4 @@ Engage with the community:
 2024-04-30 10:01 修改main.c连续调用 etimer_request_poll();etimer工作正常了。
 2024-04-30 10:59 增加了一个native，把所有修改的文件移动到此。改CmakeFile.txt文件 INCLUDE_DIRECTORIES(. os os/services ${INC}),删除test.h文件
 2024-04-30 11:16 现在工程下只保留了os、native两个文件夹，在Linux运行成功了。精简完成。ks文件大小为46k
+2024-04-30 15:25 把native文件夹下的文件数量精简到了12个。准备在建立一个stm32的框架。

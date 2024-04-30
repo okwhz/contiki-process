@@ -48,7 +48,6 @@
 #include "sys/pt.h"
 
 #include "sys/clock.h"
-#include "sys.h"
 #define  CLOCK_CONF_SIZE 4
 #define  CLOCK_TARGET_STRING " "
 #define  FPRINTF(...)

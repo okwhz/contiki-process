@@ -38,7 +38,7 @@
 #include PROJECT_CONF_PATH
 #endif /* PROJECT_CONF_PATH */
 /*---------------------------------------------------------------------------*/
-#include "native-def.h"
+// #include "native-def.h"
 /*---------------------------------------------------------------------------*/
 #include <inttypes.h>
 #include <sys/select.h>
