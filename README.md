@@ -2,10 +2,16 @@
 这个是一个学习Contiki内核的过程，学习使用Wiki文档
 
 ![](assets/img/logo/c.svg)
+# 开发环境
+## uname -a
+Linux puppypc12898 4.9.163-lxpup-32-pae #1 SMP Thu Mar 14 15:41:19 GMT 2019 i686 i686 i686 GNU/Linux
+## gcc --version
+gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
+Copyright (C) 2017 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 # Contiki操作系统
-2024-04-29 11:38 增加了一个空的文件 os/services/test.h,否则编译时头文件路径不对
-2024-04-29 17:09 增加了一个stack.c，里面定义了两个变量， int _stack_origin; int _stack;当前这个版本在Bionic Puppy中能正确编译Hello_Word.c程序了，但还不能连续输出HelloWorld，只输出一个字符串。
 # Contiki-ng
 [中文文档1](https://docs.contiki-ng.org/en/master/doc/programming/Porting-Contiki-NG-to-new-platforms.html#create-some-examples]])
 [中文文档](https://github.com/fengjikui/contiki-ng/wiki/Contiki%E2%80%90NG%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F)
@@ -82,4 +88,6 @@ Engage with the community:
 
 #### 更改
 2024-04-28 11:00 我准备学习它并精简它，只跟踪并保留os/sys/下的所有文件，其它不必要的文件全部删除，用来在Cmake的环境下学习Contiki内核。
-
+2024-04-29 11:38 增加了一个空的文件 os/services/test.h,否则编译时头文件路径不对
+2024-04-29 17:09 增加了一个stack.c，里面定义了两个变量， int _stack_origin; int _stack;当前这个版本在Bionic Puppy中能正确编译Hello_Word.c程序了，但还不能连续输出HelloWorld，只输出一个字符串。
+2024-04-30 10:01 修改main.c连续调用 etimer_request_poll();etimer工作正常了。

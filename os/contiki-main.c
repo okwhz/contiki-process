@@ -41,65 +41,40 @@
  */
 /*---------------------------------------------------------------------------*/
 #include "contiki.h"
-/* #include "contiki-net.h" */
-/* #include "sys/node-id.h" */
-#include "sys/platform.h"
-/* #include "sys/energest.h" */
-/* #include "sys/stack-check.h" */
-/* #include "dev/watchdog.h" */
-
-/* #include "net/queuebuf.h" */
-/* #include "net/app-layer/coap/coap-engine.h" */
-/* #include "net/app-layer/snmp/snmp.h" */
-/* #include "services/rpl-border-router/rpl-border-router.h" */
-/* #include "services/orchestra/orchestra.h" */
-/* #include "services/shell/serial-shell.h" */
-/* #include "services/simple-energest/simple-energest.h" */
-/* #include "services/tsch-cs/tsch-cs.h" */
-
+/* #include "sys/platform.h" */
 #include <stdio.h>
-#include <stdint.h>
+/* #include <stdint.h> */
+#include <unistd.h> //usleep声明
 /*---------------------------------------------------------------------------*/
-/* Log configuration */
-/* #include "sys/log.h" */
-#define LOG_INFO(...)
-#define LOG_INFO_(...)
-#define LOG_DBG(...)
-#define LOG_DBG_(...)
-#define LOG_MODULE "Main"
-#define LOG_LEVEL LOG_LEVEL_MAIN
 PROCESS_NAME(hello_world_process);
 /*---------------------------------------------------------------------------*/
 int
-#if PLATFORM_MAIN_ACCEPTS_ARGS
-main(int argc, char **argv)
-{
-  platform_process_args(argc, argv);
-#else
 main(void)
 {
-#endif
-  /* platform_init_stage_one(); */
+    /* platform_init_stage_one(); */
+    clock_init();
+    process_init();
+    process_start(&etimer_process, NULL);
+    process_start(&hello_world_process, NULL);
 
-  clock_init();
-  process_init();
-  process_start(&etimer_process, NULL);
-  process_start(&hello_world_process, NULL);
-#if PLATFORM_PROVIDES_MAIN_LOOP
-  platform_main_loop();
-#else
-  while(1) {
-    process_num_events_t r;
-    do {
-      r = process_run();
-      /* watchdog_periodic(); */
-    } while(r > 0);
+    while(1) {
+        process_num_events_t r;
 
-    /* platform_idle(); */
-  }
-#endif
+        do {
+            r = process_run();
+            usleep(100000);
 
-  return 0;
+            if(etimer_pending()) {
+                etimer_request_poll();
+            }
+
+            /* watchdog_periodic(); */
+        } while(r > 0);
+
+        /* platform_idle(); */
+    }
+
+    return 0;
 }
 /*---------------------------------------------------------------------------*/
 /**
