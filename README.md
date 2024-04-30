@@ -29,7 +29,8 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ## os/sys
 这个文件夹下的所有内容我将其全部保留，它就是Contiki的内核，但它调用了许多os下dev、lib、net、services、storage、sys的.h文件。
 
-- 进入os文件夹，删除所有的.c文件，执行:find . -iname "*.c" |xargs rm
+- 进入os文件夹，删除所有的.c文件，执行:
+find . -iname "*.c" |xargs rm
 - 进入os/sys，恢复所有的文件，执行:git c .
 - 增加contiki.h,在此文件中增加平台定义的类型sys.h
 - 增加rtimer-arch.h
@@ -91,3 +92,4 @@ Engage with the community:
 2024-04-29 11:38 增加了一个空的文件 os/services/test.h,否则编译时头文件路径不对
 2024-04-29 17:09 增加了一个stack.c，里面定义了两个变量， int _stack_origin; int _stack;当前这个版本在Bionic Puppy中能正确编译Hello_Word.c程序了，但还不能连续输出HelloWorld，只输出一个字符串。
 2024-04-30 10:01 修改main.c连续调用 etimer_request_poll();etimer工作正常了。
+2024-04-30 10:59 增加了一个native，把所有修改的文件移动到此。改CmakeFile.txt文件 INCLUDE_DIRECTORIES(. os os/services ${INC}),删除test.h文件
