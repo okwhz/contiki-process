@@ -8,11 +8,11 @@ project_type = all -- { all, build, clang, data, doc, game, server, shell, web, 
 
 -- Project Settings:
 version = 11
-project_name = 'A'
+project_name = 'contiki-process'
 
 -- File And Folder Filters:
-folder_filter_mode = include -- { include, exclude }
-folder_filter +=
+folder_filter_mode = exclude -- { include, exclude }
+folder_filter += builder,dev,lib,net,services,storage
 file_filter +=
 file_ignore_pattern +=
 

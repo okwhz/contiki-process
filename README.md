@@ -1,26 +1,7 @@
 
 这个是一个学习Contiki内核的过程，学习使用Wiki文档
 
-![](assets/img/logo/c.svg)
-# 开发环境
-## uname -a
-Linux puppypc12898 4.9.163-lxpup-32-pae #1 SMP Thu Mar 14 15:41:19 GMT 2019 i686 i686 i686 GNU/Linux
-## gcc --version
-gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
-Copyright (C) 2017 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-# Contiki操作系统
-# Contiki-ng
-[中文文档1](https://docs.contiki-ng.org/en/master/doc/programming/Porting-Contiki-NG-to-new-platforms.html#create-some-examples]])
-[中文文档](https://github.com/fengjikui/contiki-ng/wiki/Contiki%E2%80%90NG%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F)
-[中文维基](https://docs.contiki-ng.org/en/develop/|develop)
-[中文维基1](https://github.com/fengjikui/contiki-ng/wiki)
-[sx128X](https://github.com/tperale/sx128x)
-[教程](https://www.cnblogs.com/lijianGX/p/15414013.html)
-
-
+![](picture/img/logo/c.svg)
 # 获得一个最简版的内核
 
 |[ProtoThread-Core](https://github.com/smartmx/ProtoThread-Core)|
@@ -35,9 +16,28 @@ find . -iname "*.c" |xargs rm
 g c sys
 g c lib/list.c
 g c net/linkaddr.c
-- 进入os/sys，恢复所有的文件，执行:git c .
-- 增加contiki.h,在此文件中增加平台定义的类型sys.h
-- 增加rtimer-arch.h
+- 按需要修改native下的文件，即可在Linux下运行了
+
+# 开发环境
+### uname -a
+Linux puppypc12898 4.9.163-lxpup-32-pae #1 SMP Thu Mar 14 15:41:19 GMT 2019 i686 i686 i686 GNU/Linux
+### gcc --version
+gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
+Copyright (C) 2017 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+### cmake --version
+cmake version 3.10.2
+# Contiki操作系统
+# Contiki-ng
+8f637885a  (HEAD -> develop) Merge branch 'master' of https://github.com/contiki-ng/contiki-ng into develop 2024-04-26 16:52:01 +0800
+[中文文档1](https://docs.contiki-ng.org/en/master/doc/programming/Porting-Contiki-NG-to-new-platforms.html#create-some-examples]])
+[中文文档](https://github.com/fengjikui/contiki-ng/wiki/Contiki%E2%80%90NG%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F)
+[中文维基](https://docs.contiki-ng.org/en/develop/|develop)
+[中文维基1](https://github.com/fengjikui/contiki-ng/wiki)
+[sx128X](https://github.com/tperale/sx128x)
+[教程](https://www.cnblogs.com/lijianGX/p/15414013.html)
+
 
 ### 入门知识
 
@@ -97,4 +97,4 @@ Engage with the community:
 2024-04-29 17:09 增加了一个stack.c，里面定义了两个变量， int _stack_origin; int _stack;当前这个版本在Bionic Puppy中能正确编译Hello_Word.c程序了，但还不能连续输出HelloWorld，只输出一个字符串。
 2024-04-30 10:01 修改main.c连续调用 etimer_request_poll();etimer工作正常了。
 2024-04-30 10:59 增加了一个native，把所有修改的文件移动到此。改CmakeFile.txt文件 INCLUDE_DIRECTORIES(. os os/services ${INC}),删除test.h文件
-2024-04-30 11:16 现在工程下只保留了os、native两个文件夹，在Linux运行成功了。精简完成。
+2024-04-30 11:16 现在工程下只保留了os、native两个文件夹，在Linux运行成功了。精简完成。ks文件大小为46k
