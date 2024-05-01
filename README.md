@@ -100,3 +100,4 @@ Engage with the community:
 2024-04-30 11:16 现在工程下只保留了os、native两个文件夹，在Linux运行成功了。精简完成。ks文件大小为46k
 2024-04-30 15:25 把native文件夹下的文件数量精简到了12个。准备在建立一个stm32的框架。
 2024-04-30 15:41 增加了一个CMakeLists.native的文件，CMakeLists.txt中包含它就能编译native了。
+2024-05-01 11:00 将对clock_time_t的长度定义宏放入了contiki-confi.h,更改了rtimer.c包含Contiki.h,否则timer.h没有引用contiki.h

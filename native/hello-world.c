@@ -56,7 +56,7 @@ PROCESS_THREAD(hello_world_process, ev, data)
 
   while(1) {
     printf("Hello, world,CLOCK_SECOND=%d\n",CLOCK_SECOND);
-    C_P(0,"clock_time()=%lld",clock_time());
+    printf("clock_time()=%d,clock_time_t=%ld",clock_time(),sizeof(clock_time_t));
     /* Wait for the periodic timer to expire and then restart the timer. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
     etimer_reset(&timer);

@@ -94,7 +94,12 @@ typedef unsigned int uip_stats_t;
 #include <ctype.h>
 
 #define CLOCK_CONF_SECOND 1000
-
+#define  CLOCK_CONF_SIZE 4
+#define  CLOCK_TARGET_STRING " "
+#define  FPRINTF(...)
+#define  PRINTF(...)
+#define  mini_snprintf(...)
+#define  FUARTprintf(...)
 #define LOG_CONF_ENABLED 0
 
 #define PLATFORM_SUPPORTS_BUTTON_HAL 0

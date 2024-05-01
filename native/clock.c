@@ -37,9 +37,8 @@
  *         Adam Dunkels <adam@sics.se>
  */
 
-#include "sys/clock.h"
+#include "contiki.h"
 #include <time.h>
-#include <sys/time.h>
 
 /*---------------------------------------------------------------------------*/
 typedef struct clock_timespec_s {

@@ -41,8 +41,9 @@
 #include <sys/time.h>
 #include <stddef.h>
 
-#include "sys/rtimer.h"
-#include "sys/clock.h"
+#include "contiki.h"
+/* #include "sys/rtimer.h" */
+/* #include "sys/clock.h" */
 
 #define DEBUG 0
 #if DEBUG
@@ -73,7 +74,7 @@ rtimer_arch_schedule(rtimer_clock_t t)
   rtimer_clock_t c;
 
   c = t - clock_time();
-  
+
   val.it_value.tv_sec = c / CLOCK_SECOND;
   val.it_value.tv_usec = (c % CLOCK_SECOND) * CLOCK_SECOND;
 

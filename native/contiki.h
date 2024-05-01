@@ -48,11 +48,5 @@
 #include "sys/pt.h"
 
 #include "sys/clock.h"
-#define  CLOCK_CONF_SIZE 4
-#define  CLOCK_TARGET_STRING " "
-#define  FPRINTF(...)
-#define  PRINTF(...)
-#define  mini_snprintf(...)
-#define  FUARTprintf(...)
 
 #endif /* CONTIKI_H_ */
