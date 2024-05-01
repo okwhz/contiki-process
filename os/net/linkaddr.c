@@ -59,16 +59,14 @@ const linkaddr_t linkaddr_null = { { 0, 0, 0, 0, 0, 0 } };
 
 
 /*---------------------------------------------------------------------------*/
-void
-linkaddr_copy(linkaddr_t *dest, const linkaddr_t *src)
+void linkaddr_copy(linkaddr_t *dest, const linkaddr_t *src)
 {
-	memcpy(dest, src, LINKADDR_SIZE);
+    memcpy(dest, src, LINKADDR_SIZE);
 }
 /*---------------------------------------------------------------------------*/
-bool
-linkaddr_cmp(const linkaddr_t *addr1, const linkaddr_t *addr2)
+bool linkaddr_cmp(const linkaddr_t *addr1, const linkaddr_t *addr2)
 {
-	return (memcmp(addr1, addr2, LINKADDR_SIZE) == 0);
+    return (memcmp(addr1, addr2, LINKADDR_SIZE) == 0);
 }
 /*---------------------------------------------------------------------------*/
 /** @} */

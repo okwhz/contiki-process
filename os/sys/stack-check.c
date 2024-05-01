@@ -55,114 +55,108 @@
 extern uint8_t _stack;
 
 #if STACK_CHECK_PERIODIC_CHECKS
-PROCESS(stack_check_process, "Stack check");
+    PROCESS(stack_check_process, "Stack check");
 #endif
 /*---------------------------------------------------------------------------*/
 /* The symbol with which the stack memory is initially filled */
 #define STACK_FILL 0xcd
 /*---------------------------------------------------------------------------*/
 #ifdef STACK_ORIGIN
-/* use the #defined value */
-#define GET_STACK_ORIGIN() STACK_ORIGIN
+    /* use the #defined value */
+    #define GET_STACK_ORIGIN() STACK_ORIGIN
 #else
-/* use the value provided by the linker script */
-extern int _stack_origin;
-#define GET_STACK_ORIGIN() (&_stack_origin)
+    /* use the value provided by the linker script */
+    extern int _stack_origin;
+    #define GET_STACK_ORIGIN() (&_stack_origin)
 #endif
 /*---------------------------------------------------------------------------*/
-void
-stack_check_init(void)
+void stack_check_init(void)
 {
-  /* Make this volatile to prevent the compiler from optimising the while loop */
-  volatile uint8_t *p;
-
-  /* Make this static to avoid destroying it in the while loop */
-  static void *stack_top;
-#if defined __GNUC__ && __GNUC__ >= 13
+    /* Make this volatile to prevent the compiler from optimising the while loop */
+    volatile uint8_t *p;
+    /* Make this static to avoid destroying it in the while loop */
+    static void *stack_top;
+    #if defined __GNUC__ && __GNUC__ >= 13
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdangling-pointer"
-#endif
-  /* Use address of this local variable as a boundary */
-  stack_top = &p;
-#if defined __GNUC__ && __GNUC__ >= 13
+    #endif
+    /* Use address of this local variable as a boundary */
+    stack_top = &p;
+    #if defined __GNUC__ && __GNUC__ >= 13
 #pragma GCC diagnostic pop
-#endif
+    #endif
+    /* Note: this is expected to be called before the WDT is started! */
+    p = &_stack;
 
-  /* Note: this is expected to be called before the WDT is started! */
-  p = &_stack;
-  while(p < (uint8_t *)stack_top) {
-    *p++ = STACK_FILL;
-  }
+    while(p < (uint8_t *)stack_top) {
+        *p++ = STACK_FILL;
+    }
 
-#if STACK_CHECK_PERIODIC_CHECKS
-  /* Start the periodic checker process */
-  process_start(&stack_check_process, NULL);
-#endif
+    #if STACK_CHECK_PERIODIC_CHECKS
+    /* Start the periodic checker process */
+    process_start(&stack_check_process, NULL);
+    #endif
 }
 /*---------------------------------------------------------------------------*/
-size_t
-stack_check_get_usage(void)
+size_t stack_check_get_usage(void)
 {
-  uint8_t *p = &_stack;
+    uint8_t *p = &_stack;
+    /* Make sure WDT is not triggered */
+    watchdog_periodic();
 
-  /* Make sure WDT is not triggered */
-  watchdog_periodic();
+    /* Skip the bytes used after heap; it's 1 byte by default for _stack,
+     * more than that means dynamic memory allocation is used somewhere.
+     */
+    while(*p != STACK_FILL && p < (uint8_t *)GET_STACK_ORIGIN()) {
+        p++;
+    }
 
-  /* Skip the bytes used after heap; it's 1 byte by default for _stack,
-   * more than that means dynamic memory allocation is used somewhere.
-   */
-  while(*p != STACK_FILL && p < (uint8_t *)GET_STACK_ORIGIN()) {
-    p++;
-  }
+    /* Skip memory-region reserved for the stack not used yet by the program */
+    while(*p == STACK_FILL && p < (uint8_t *)GET_STACK_ORIGIN()) {
+        p++;
+    }
 
-  /* Skip memory-region reserved for the stack not used yet by the program */
-  while(*p == STACK_FILL && p < (uint8_t *)GET_STACK_ORIGIN()) {
-    p++;
-  }
+    /* Make sure WDT is not triggered */
+    watchdog_periodic();
 
-  /* Make sure WDT is not triggered */
-  watchdog_periodic();
+    if(p >= (uint8_t *)GET_STACK_ORIGIN()) {
+        /* This means the stack is screwed. */
+        return SIZE_MAX;
+    }
 
-  if(p >= (uint8_t*)GET_STACK_ORIGIN()) {
-    /* This means the stack is screwed. */
-    return SIZE_MAX;
-  }
-
-  return (uint8_t *)GET_STACK_ORIGIN() - p;
+    return (uint8_t *)GET_STACK_ORIGIN() - p;
 }
 /*---------------------------------------------------------------------------*/
-size_t
-stack_check_get_reserved_size(void)
+size_t stack_check_get_reserved_size(void)
 {
-  return (uint8_t *)GET_STACK_ORIGIN() - &_stack;
+    return (uint8_t *)GET_STACK_ORIGIN() - &_stack;
 }
 /*---------------------------------------------------------------------------*/
 #if STACK_CHECK_PERIODIC_CHECKS
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(stack_check_process, ev, data)
 {
-  static struct etimer et;
+    static struct etimer et;
+    PROCESS_BEGIN();
+    etimer_set(&et, STACK_CHECK_PERIOD);
 
-  PROCESS_BEGIN();
+    while(1) {
+        PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
+        size_t actual = stack_check_get_usage();
+        size_t allowed = stack_check_get_reserved_size();
 
-  etimer_set(&et, STACK_CHECK_PERIOD);
+        if(actual > allowed) {
+            LOG_ERR("Check failed: %u vs. %u\n", (unsigned)actual,
+                    (unsigned)allowed);
 
-  while(1) {
-    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&et));
+        } else {
+            LOG_DBG("Check ok: %u vs. %u\n", (unsigned)actual, (unsigned)allowed);
+        }
 
-    size_t actual = stack_check_get_usage();
-    size_t allowed = stack_check_get_reserved_size();
-    if(actual > allowed) {
-      LOG_ERR("Check failed: %u vs. %u\n", (unsigned)actual,
-              (unsigned)allowed);
-    } else {
-      LOG_DBG("Check ok: %u vs. %u\n", (unsigned)actual, (unsigned)allowed);
+        etimer_reset(&et);
     }
 
-    etimer_reset(&et);
-  }
-
-  PROCESS_END();
+    PROCESS_END();
 }
 /*---------------------------------------------------------------------------*/
 #endif /* STACK_CHECK_PERIODIC_CHECKS */

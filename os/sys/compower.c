@@ -50,33 +50,27 @@
 struct compower_activity compower_idle_activity;
 
 /*---------------------------------------------------------------------------*/
-void
-compower_init(void)
+void compower_init(void)
 {
-  compower_clear(&compower_idle_activity);
+    compower_clear(&compower_idle_activity);
 }
 /*---------------------------------------------------------------------------*/
-void
-compower_accumulate(struct compower_activity *e)
+void compower_accumulate(struct compower_activity *e)
 {
-  static uint64_t last_listen, last_transmit;
-  uint64_t listen, transmit;
-
-  energest_flush();
-
-  listen = energest_type_time(ENERGEST_TYPE_LISTEN);
-  e->listen += listen - last_listen;
-  last_listen = listen;
-
-  transmit = energest_type_time(ENERGEST_TYPE_TRANSMIT);
-  e->transmit += transmit - last_transmit;
-  last_transmit = transmit;
+    static uint64_t last_listen, last_transmit;
+    uint64_t listen, transmit;
+    energest_flush();
+    listen = energest_type_time(ENERGEST_TYPE_LISTEN);
+    e->listen += listen - last_listen;
+    last_listen = listen;
+    transmit = energest_type_time(ENERGEST_TYPE_TRANSMIT);
+    e->transmit += transmit - last_transmit;
+    last_transmit = transmit;
 }
 /*---------------------------------------------------------------------------*/
-void
-compower_clear(struct compower_activity *e)
+void compower_clear(struct compower_activity *e)
 {
-  e->listen = e->transmit = 0;
+    e->listen = e->transmit = 0;
 }
 /*---------------------------------------------------------------------------*/
 /** @} */

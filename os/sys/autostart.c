@@ -44,25 +44,23 @@
 #define LOG_LEVEL LOG_LEVEL_SYS
 
 /*---------------------------------------------------------------------------*/
-void
-autostart_start(struct process * const processes[])
+void autostart_start(struct process *const processes[])
 {
-  int i;
+    int i;
 
-  for(i = 0; processes[i] != NULL; ++i) {
-    process_start(processes[i], NULL);
-    LOG_DBG("starting process '%s'\n", PROCESS_NAME_STRING(processes[i]));
-  }
+    for(i = 0; processes[i] != NULL; ++i) {
+        process_start(processes[i], NULL);
+        LOG_DBG("starting process '%s'\n", PROCESS_NAME_STRING(processes[i]));
+    }
 }
 /*---------------------------------------------------------------------------*/
-void
-autostart_exit(struct process * const processes[])
+void autostart_exit(struct process *const processes[])
 {
-  int i;
+    int i;
 
-  for(i = 0; processes[i] != NULL; ++i) {
-    process_exit(processes[i]);
-    LOG_DBG("stopping process '%s'\n", PROCESS_NAME_STRING(processes[i]));
-  }
+    for(i = 0; processes[i] != NULL; ++i) {
+        process_exit(processes[i]);
+        LOG_DBG("stopping process '%s'\n", PROCESS_NAME_STRING(processes[i]));
+    }
 }
 /*---------------------------------------------------------------------------*/

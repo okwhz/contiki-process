@@ -43,8 +43,8 @@ cmake version 3.10.2
 
 基本功很重要
 
-- 虚拟机使用 - 学会安装、使用虚拟机,明白VMware几种网络连接的区别
-    - 略
+- 编码风格：使用如下指令修改格式
+    - astyle -r -n -F -A8 -c -s4 -xV -S -N -xt4 -xW -w -xw -Y -p -U -xe -k3 -W3 -e -j -xg -xf *.c *.h *.cpp
 
 - 如何科学上网 - 懂得都懂
     - 略

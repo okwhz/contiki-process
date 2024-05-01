@@ -39,29 +39,25 @@
 /*---------------------------------------------------------------------------*/
 static int_master_status_t stat = DISABLED;
 /*---------------------------------------------------------------------------*/
-void
-int_master_enable(void)
+void int_master_enable(void)
 {
-  stat = ENABLED;
+    stat = ENABLED;
 }
 /*---------------------------------------------------------------------------*/
-int_master_status_t
-int_master_read_and_disable(void)
+int_master_status_t int_master_read_and_disable(void)
 {
-  int_master_status_t rv = stat;
-  stat = DISABLED;
-  return rv;
+    int_master_status_t rv = stat;
+    stat = DISABLED;
+    return rv;
 }
 /*---------------------------------------------------------------------------*/
-void
-int_master_status_set(int_master_status_t status)
+void int_master_status_set(int_master_status_t status)
 {
-  stat = status;
+    stat = status;
 }
 /*---------------------------------------------------------------------------*/
-bool
-int_master_is_enabled(void)
+bool int_master_is_enabled(void)
 {
-  return stat == DISABLED ? false : true;
+    return stat == DISABLED ? false : true;
 }
 /*---------------------------------------------------------------------------*/
