@@ -2442,7 +2442,7 @@ PROCESS_THREAD(cfiles_process, ev, data)
                 if(pid == 0) {
                     fd = open(temp_dir, O_CREAT | O_WRONLY, 0755);
                     dup2(fd, 1);
-                    chdir(dir);
+                    if(chdir(dir))exit(1);
                     execlp("fzf", "fzf", (char *)0);
                     exit(1);
 
@@ -2533,13 +2533,13 @@ PROCESS_THREAD(cfiles_process, ev, data)
                 remove(temp_dir);
                 // Create a child process to run command and store output in preview file
                 endwin();
-                pipe(pfd);
+                if(pipe(pfd))exit(1);
                 pid = fork();
 
                 if(pid == 0) {
                     dup2(pfd[1], 1);
                     close(pfd[1]);
-                    chdir(dir);
+                    if(chdir(dir))exit(1);
 
                     if(hiddenFlag == 1) {
                         execlp("ls", "ls", "-a", (char *)0);
@@ -2642,7 +2642,7 @@ PROCESS_THREAD(cfiles_process, ev, data)
                 pid = fork();
 
                 if(pid == 0) {
-                    chdir(dir);
+                    if(chdir(dir))exit(1);
                     execlp(shell, shell, (char *)0);
                     exit(1);
 
@@ -2990,7 +2990,7 @@ PROCESS_THREAD(cfiles_process, ev, data)
                         pid = fork();
 
                         if(pid == 0) {
-                            chdir(dir);
+                            if(chdir(dir))exit(1);
                             execl(temp_dir, scripts[option], buf, (char *)0);
                             exit(1);
 
