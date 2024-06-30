@@ -53,35 +53,37 @@
 static struct rtimer *next_rtimer;
 
 /*---------------------------------------------------------------------------*/
-int rtimer_set(struct rtimer *rtimer, rtimer_clock_t time,
-               rtimer_clock_t duration,
-               rtimer_callback_t func, void *ptr)
+int
+rtimer_set(struct rtimer *rtimer, rtimer_clock_t time,
+	   rtimer_clock_t duration,
+	   rtimer_callback_t func, void *ptr)
 {
-    LOG_DBG("rtimer_set time %lu\n", (unsigned long)time);
+  LOG_DBG("rtimer_set time %lu\n", (unsigned long)time);
 
-    if(next_rtimer) {
-        return RTIMER_ERR_ALREADY_SCHEDULED;
-    }
+  if(next_rtimer) {
+    return RTIMER_ERR_ALREADY_SCHEDULED;
+  }
 
-    rtimer->func = func;
-    rtimer->ptr = ptr;
-    rtimer->time = time;
-    next_rtimer = rtimer;
-    rtimer_arch_schedule(time);
-    return RTIMER_OK;
+  rtimer->func = func;
+  rtimer->ptr = ptr;
+
+  rtimer->time = time;
+  next_rtimer = rtimer;
+
+  rtimer_arch_schedule(time);
+  return RTIMER_OK;
 }
 /*---------------------------------------------------------------------------*/
-void rtimer_run_next(void)
+void
+rtimer_run_next(void)
 {
-    struct rtimer *t;
-
-    if(next_rtimer == NULL) {
-        return;
-    }
-
-    t = next_rtimer;
-    next_rtimer = NULL;
-    t->func(t, t->ptr);
+  struct rtimer *t;
+  if(next_rtimer == NULL) {
+    return;
+  }
+  t = next_rtimer;
+  next_rtimer = NULL;
+  t->func(t, t->ptr);
 }
 /*---------------------------------------------------------------------------*/
 

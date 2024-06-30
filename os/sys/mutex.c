@@ -41,25 +41,30 @@
 #include <stdint.h>
 #include <stdbool.h>
 /*---------------------------------------------------------------------------*/
-bool mutex_generic_try_lock(volatile mutex_t *mutex)
+bool
+mutex_generic_try_lock(volatile mutex_t *mutex)
 {
-    bool success = false;
-    int_master_status_t status = critical_enter();
+  bool success = false;
+  int_master_status_t status = critical_enter();
 
-    if(*mutex == MUTEX_STATUS_UNLOCKED) {
-        *mutex = MUTEX_STATUS_LOCKED;
-        success = true;
-    }
+  if(*mutex == MUTEX_STATUS_UNLOCKED) {
+    *mutex = MUTEX_STATUS_LOCKED;
+    success = true;
+  }
 
-    critical_exit(status);
-    return success;
+  critical_exit(status);
+
+  return success;
 }
 /*---------------------------------------------------------------------------*/
-void mutex_generic_unlock(volatile mutex_t *mutex)
+void
+mutex_generic_unlock(volatile mutex_t *mutex)
 {
-    int_master_status_t status = critical_enter();
-    *mutex = MUTEX_STATUS_UNLOCKED;
-    critical_exit(status);
+  int_master_status_t status = critical_enter();
+
+  *mutex = MUTEX_STATUS_UNLOCKED;
+
+  critical_exit(status);
 }
 /*---------------------------------------------------------------------------*/
 /** @} */

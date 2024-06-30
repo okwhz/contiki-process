@@ -38,17 +38,16 @@
 #include <sys/critical.h>
 
 /*---------------------------------------------------------------------------*/
-bool atomic_generic_cas_uint8(uint8_t *target, uint8_t old_val, uint8_t new_val)
+bool
+atomic_generic_cas_uint8(uint8_t *target, uint8_t old_val, uint8_t new_val)
 {
-    bool ret = false;
-    int_master_status_t status = critical_enter();
-
-    if(*target == old_val) {
-        *target = new_val;
-        ret = true;
-    }
-
-    critical_exit(status);
-    return ret;
+  bool ret = false;
+  int_master_status_t status = critical_enter();
+  if(*target == old_val) {
+    *target = new_val;
+    ret = true;
+  }
+  critical_exit(status);
+  return ret;
 }
 /** @} */

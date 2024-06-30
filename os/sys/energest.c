@@ -47,37 +47,37 @@ ENERGEST_TIME_T energest_current_time[ENERGEST_TYPE_MAX];
 bool energest_current_mode[ENERGEST_TYPE_MAX];
 
 /*---------------------------------------------------------------------------*/
-void energest_init(void)
+void
+energest_init(void)
 {
-    int i;
-
-    for(i = 0; i < ENERGEST_TYPE_MAX; ++i) {
-        energest_total_time[i] = energest_current_time[i] = 0;
-        energest_current_mode[i] = false;
-    }
-
-    ENERGEST_ON(ENERGEST_TYPE_CPU);
+  int i;
+  for(i = 0; i < ENERGEST_TYPE_MAX; ++i) {
+    energest_total_time[i] = energest_current_time[i] = 0;
+    energest_current_mode[i] = false;
+  }
+  ENERGEST_ON(ENERGEST_TYPE_CPU);
 }
 /*---------------------------------------------------------------------------*/
-void energest_flush(void)
+void
+energest_flush(void)
 {
-    uint64_t now;
-    int i;
-
-    for(i = 0; i < ENERGEST_TYPE_MAX; i++) {
-        if(energest_current_mode[i]) {
-            now = ENERGEST_CURRENT_TIME();
-            energest_total_time[i] +=
-                            (ENERGEST_TIME_T)(now - energest_current_time[i]);
-            energest_current_time[i] = now;
-        }
+  uint64_t now;
+  int i;
+  for(i = 0; i < ENERGEST_TYPE_MAX; i++) {
+    if(energest_current_mode[i]) {
+      now = ENERGEST_CURRENT_TIME();
+      energest_total_time[i] +=
+        (ENERGEST_TIME_T)(now - energest_current_time[i]);
+      energest_current_time[i] = now;
     }
+  }
 }
 /*---------------------------------------------------------------------------*/
-uint64_t energest_get_total_time(void)
+uint64_t
+energest_get_total_time(void)
 {
-    return energest_type_time(ENERGEST_TYPE_CPU) +
-           energest_type_time(ENERGEST_TYPE_LPM) +
-           energest_type_time(ENERGEST_TYPE_DEEP_LPM);
+  return energest_type_time(ENERGEST_TYPE_CPU) +
+    energest_type_time(ENERGEST_TYPE_LPM) +
+    energest_type_time(ENERGEST_TYPE_DEEP_LPM);
 }
 #endif /* ENERGEST_CONF_ON */

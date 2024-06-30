@@ -48,8 +48,8 @@
 #include "sys/clock.h"
 #include "sys/stimer.h"
 
-#define SCLOCK_GEQ(a, b)    ((unsigned long)((a) - (b)) < \
-                             ((unsigned long)(~((unsigned long)0)) >> 1))
+#define SCLOCK_GEQ(a, b)	((unsigned long)((a) - (b)) < \
+				((unsigned long)(~((unsigned long)0)) >> 1))
 
 /*---------------------------------------------------------------------------*/
 /**
@@ -66,11 +66,12 @@
  *
  * \sa stimer_restart()
  */
-void stimer_reset(struct stimer *t)
+void
+stimer_reset(struct stimer *t)
 {
-    if(stimer_expired(t)) {
-        t->start += t->interval;
-    }
+  if(stimer_expired(t)) {
+    t->start += t->interval;
+  }
 }
 /*---------------------------------------------------------------------------*/
 /**
@@ -87,9 +88,10 @@ void stimer_reset(struct stimer *t)
  *
  * \sa stimer_reset()
  */
-void stimer_restart(struct stimer *t)
+void
+stimer_restart(struct stimer *t)
 {
-    t->start = clock_seconds();
+  t->start = clock_seconds();
 }
 /*---------------------------------------------------------------------------*/
 /**
@@ -103,9 +105,10 @@ void stimer_restart(struct stimer *t)
  * \return True if the timer has expired.
  *
  */
-bool stimer_expired(struct stimer *t)
+bool
+stimer_expired(struct stimer *t)
 {
-    return SCLOCK_GEQ(clock_seconds(), t->start + t->interval);
+  return SCLOCK_GEQ(clock_seconds(), t->start + t->interval);
 }
 /*---------------------------------------------------------------------------*/
 /**
@@ -118,9 +121,10 @@ bool stimer_expired(struct stimer *t)
  * \return The time elapsed since the last start of the timer
  *
  */
-unsigned long stimer_elapsed(struct stimer *t)
+unsigned long
+stimer_elapsed(struct stimer *t)
 {
-    return clock_seconds() - t->start;
+  return clock_seconds() - t->start;
 }
 
 /*---------------------------------------------------------------------------*/
