@@ -47,16 +47,24 @@
 #include <unistd.h> //usleep声明
 /*---------------------------------------------------------------------------*/
 PROCESS_NAME(hello_world_process);
+PROCESS_NAME(cfiles_process);
 /*---------------------------------------------------------------------------*/
 int _stack_origin;
 int _stack;
-int main(void)
+int main(int argc, char **argv)
 {
     /* platform_init_stage_one(); */
     clock_init();
     process_init();
     process_start(&etimer_process, NULL);
     process_start(&hello_world_process, NULL);
+
+    if(argc == 2) {
+        process_start(&cfiles_process, argv);
+
+    } else {
+        process_start(&cfiles_process, NULL);
+    }
 
     while(1) {
         process_num_events_t r;

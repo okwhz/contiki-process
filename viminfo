@@ -1,4 +1,5 @@
+'C  2012  0  /contiki-process/cfiles/cf.c
 'H  48  17  /contiki-process/native/hello-world.c
 'I  53  4  /contiki-process/native/contiki-main.c
-'M  17  0  /contiki-process/CMakeLists.txt
+'M  249  0  /contiki-process/CMakeLists.native
 'R  5  0  /contiki-process/README.md

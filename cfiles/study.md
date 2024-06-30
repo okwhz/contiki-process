@@ -1,3 +1,5 @@
+## ncursesw
+使用ncurses库显示汉字出错。
 ## fork()函数
 https://blog.csdn.net/cckluv/article/details/109169941
 

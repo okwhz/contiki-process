@@ -187,6 +187,7 @@ add_definitions(
     -Wno-unused-parameter
     -Wall
     -DDEBUG_LEXER
+    -DLC_CONF_INCLUDE="lc-addrlabels.h"
     # C_P A_P是否显示彩色
     # -DMU_NOCOLOR
     # 是否使用A_P
@@ -246,6 +247,7 @@ AUX_SOURCE_DIRECTORY(native SRC2)
 # MESSAGE("sources:"${sources})
 # LIST(REMOVE_ITEM SRC ${PENDING}) #新生成的SRCS就不包括pending目录的源文件了
 SET(SRCS ${SRCS} ${SRC1} ${SRC2} os/lib/list.c os/net/linkaddr.c)
+SET(SRCS ${SRCS} cfiles/cf.c)
 LIST(REMOVE_ITEM SRCS ${PENDING}) #SRCS就不包括pending目录的源文件
 LIST(REMOVE_DUPLICATES SRCS)
 
@@ -255,7 +257,7 @@ MESSAGE(STATUS "This is BINARY dir " ${PROJECT_BINARY_DIR})
 MESSAGE(STATUS "This is SOURCE dir " ${PROJECT_SOURCE_DIR})
 ADD_EXECUTABLE(ks ${SRCS})
 # TARGET_LINK_LIBRARIES(ks mysqlclient wxsqlite3 cryptopp dl)
-TARGET_LINK_LIBRARIES(ks m readline sqlite3 pcap)
+TARGET_LINK_LIBRARIES(ks m readline sqlite3 pcap ncursesw)
 IF( wxWidgets_FOUND )
     TARGET_LINK_LIBRARIES(ks ${wxWidgets_LIBRARIES} )
 ENDIF( wxWidgets_FOUND)
