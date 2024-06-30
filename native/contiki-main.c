@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     clock_init();
     process_init();
     process_start(&etimer_process, NULL);
-    process_start(&hello_world_process, NULL);
+    /* process_start(&hello_world_process, NULL); */
 
     if(argc == 2) {
         process_start(&cfiles_process, argv);

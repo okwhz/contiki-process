@@ -1057,6 +1057,7 @@ void getImgPreview(char *filepath, int maxy, int maxx)
 {
     pid_t pid;
     pid = fork();
+    return;
 
     if(pid == 0) {
         // For storing arguments to the DISPLAYIMG script
@@ -1795,6 +1796,7 @@ void clearImg()
     char arg2[5];
     char arg3[5];
     char arg4[5];
+    return;
     // Convert numerical arguments to strings
     snprintf(arg1, 5, "%d", maxx / 2 + 2);
     snprintf(arg2, 5, "%d", 2);
@@ -2046,7 +2048,7 @@ PROCESS(cfiles_process, "cfiles_process");
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(cfiles_process, ev, data)
 {
-    static struct etimer timer;
+    /* static struct etimer timer; */
     /* Setup a periodic timer that expires after 10 seconds. */
     // Initialization
     PROCESS_BEGIN();

@@ -101,4 +101,4 @@ Engage with the community:
 2024-04-30 15:25 把native文件夹下的文件数量精简到了12个。准备在建立一个stm32的框架。
 2024-04-30 15:41 增加了一个CMakeLists.native的文件，CMakeLists.txt中包含它就能编译native了。
 2024-05-01 11:00 将对clock_time_t的长度定义宏放入了contiki-confi.h,更改了rtimer.c包含Contiki.h,否则timer.h没有引用contiki.h
-2024-06-30 15:20 增加了contiki/core/ctk,准备开发Cfiles，当前的版本增加执行C脚本的功能。
+2024-06-30 15:20 增加了contiki/core/ctk,准备开发Cfiles，当前的版本增加执行C脚本的功能。删除了图像预览的功能，编译时不再显示警告。
