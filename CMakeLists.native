@@ -191,7 +191,7 @@ add_definitions(
     -ffunction-sections
     -fdata-sections
     -fvisibility=hidden
-    -Wl,-Bsymbolic -lm #没有作用
+    # -Wl,-Bsymbolic -lm #没有作用
     # C_P A_P是否显示彩色
     # -DMU_NOCOLOR
     # 是否使用A_P

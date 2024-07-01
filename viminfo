@@ -3,3 +3,8 @@
 'I  53  4  /contiki-process/native/contiki-main.c
 'M  249  0  /contiki-process/CMakeLists.native
 'R  5  0  /contiki-process/README.md
+
+> /contiki-process/CMakeLists.native
+	a	183	0
+	b	234	5
+	c	261	3
