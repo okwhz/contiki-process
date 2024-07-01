@@ -15,7 +15,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 file(MAKE_DIRECTORY ./builder)
 set (CMAKE_C_STANDARD 11)
-project (contiki-process)
+project (cf)
 #{ 下面的语句是为了生成Git及编译信息
 find_package(Git)
 set(COMMIT_HASH "")
@@ -188,13 +188,17 @@ add_definitions(
     -Wall
     -DDEBUG_LEXER
     -DLC_CONF_INCLUDE="lc-addrlabels.h"
+    -ffunction-sections
+    -fdata-sections
+    -fvisibility=hidden
+    -Wl,-Bsymbolic -lm #没有作用
     # C_P A_P是否显示彩色
     # -DMU_NOCOLOR
     # 是否使用A_P
     # -DASSERT__PRINT
 )
 
-add_compile_options(-march=native -O3 -fexceptions -pthread -fPIC)
+add_compile_options(-march=native -fexceptions -pthread -fPIC)
 
 #FIND AND ADD ALL HEADERS & SOURCES & ASM TO TARGET
 MACRO(HEADER_DIRECTORIES RETURN_LIST)
@@ -252,6 +256,10 @@ LIST(REMOVE_ITEM SRCS ${PENDING}) #SRCS就不包括pending目录的源文件
 LIST(REMOVE_DUPLICATES SRCS)
 
 MESSAGE("SRCS:" ${SRCS})
+# set(FLAGS " -ffunction-sections -fdata-sections -Wl,--gc-sections ") #此选项用来删除未使用函数。没有作用
+# set(FLAGS " -Wa,-a,cf.lst ") #此选项用来生成list文件。没有作用
+set(FLAGS " -Wl,-Map,MapFILE.txt ") #此选项用来生成Map文件。
+set(FLAGS " -Wl,-Map=object.map,--cref,--gc-section ") #此选项用来生成Map文件。
 # set(FLAGS " -Wno-format-truncation ") #snprintf显示警告。
 # set(FLAGS "-ggdb -Wall -Wextra -Wundef -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wredundant-decls")
 # set(FLAGS "${FLAGS} -Wno-unused-parameter -Wno-missing-field-initializers -Wformat=2 -Wcast-align -Wformat-nonliteral -Wformat-security")
@@ -265,9 +273,22 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS}")
 
 MESSAGE(STATUS "This is BINARY dir " ${PROJECT_BINARY_DIR})
 MESSAGE(STATUS "This is SOURCE dir " ${PROJECT_SOURCE_DIR})
-ADD_EXECUTABLE(ks ${SRCS})
+ADD_EXECUTABLE(${PROJECT_NAME} ${SRCS})
 # TARGET_LINK_LIBRARIES(ks mysqlclient wxsqlite3 cryptopp dl)
-TARGET_LINK_LIBRARIES(ks m readline sqlite3 pcap ncursesw)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} m readline sqlite3 pcap ncursesw)
 IF( wxWidgets_FOUND )
-    TARGET_LINK_LIBRARIES(ks ${wxWidgets_LIBRARIES} )
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${wxWidgets_LIBRARIES} )
 ENDIF( wxWidgets_FOUND)
+#ADD_CUSTOM_COMMAND(DEPENDS ${PROJECT_NAME}.elf OUTPUT ${PROJECT_NAME}.hex COMMAND ${CMAKE_OBJCOPY} -Oihex ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.elf ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)
+#ADD_CUSTOM_COMMAND(DEPENDS ${PROJECT_NAME}.elf OUTPUT ${PROJECT_NAME}.bin COMMAND ${CMAKE_OBJCOPY} -Obinary ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.elf ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.bin)
+##2015-08-15 10:00   增加了-D开关，显示文件中所有汇编信息
+# ADD_CUSTOM_COMMAND(DEPENDS ${PROJECT_NAME} OUTPUT ${PROJECT_NAME}.list COMMAND ${CMAKE_OBJDUMP} -D -S -l -z ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.elf > ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.list)
+
+# ADD_CUSTOM_COMMAND(DEPENDS ${PROJECT_NAME} OUTPUT ${PROJECT_NAME}.list COMMAND ${CMAKE_OBJDUMP} -D -S -l -z ${PROJECT_SOURCE_DIR}/${PROJECT_NAME} > ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.list)
+ADD_CUSTOM_COMMAND(DEPENDS ${PROJECT_NAME} OUTPUT ${PROJECT_NAME}.list COMMAND ${CMAKE_OBJDUMP} -d -S -l -z ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}  > ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.lst )
+# ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE} ${PROJECT_BINARY_DIR}/${PROJECT_NAME})
+#
+#ADD_CUSTOM_TARGET(generate_bin ALL DEPENDS ${PROJECT_NAME}.bin)
+# ADD_CUSTOM_TARGET(generate_hex ALL DEPENDS ${PROJECT_NAME}.hex)
+ADD_CUSTOM_TARGET(generate_list ALL DEPENDS ${PROJECT_NAME}.list)
+# ADD_CUSTOM_TARGET(tt_list ALL COMMAND ${CMAKE_OBJDUMP} -D -S -l -z ${PROJECT_SOURCE_DIR}/${PROJECT_NAME} > ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.lst) #此命令生成lst文件在控制台有输出，慢！

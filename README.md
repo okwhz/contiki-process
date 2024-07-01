@@ -103,3 +103,4 @@ Engage with the community:
 2024-05-01 11:00 将对clock_time_t的长度定义宏放入了contiki-confi.h,更改了rtimer.c包含Contiki.h,否则timer.h没有引用contiki.h
 2024-06-30 15:20 增加了contiki/core/ctk,准备开发Cfiles，当前的版本增加执行C脚本的功能。删除了图像预览的功能，编译时不再显示警告。
 2024-07-01 07:44 修改chdir、pipe没有返回值判断产生警告。
+2024-07-01 16:38 改Cmakefile.lst文件，产生lst文件，减少文件大小。

@@ -53,8 +53,17 @@ PROCESS_THREAD(hello_world_process, ev, data)
     etimer_set(&timer, CLOCK_SECOND * 1);
 
     while(1) {
+        #ifdef __x86_64__
+        printf("__x86_64__\n");
+        #elif __i386__
+        printf("__i386__\n");
+        #endif
         printf("Hello, world,CLOCK_SECOND=%d\n", CLOCK_SECOND);
+        #ifdef __x86_64__
         printf("clock_time()=%d,clock_time_t=%ld", clock_time(), sizeof(clock_time_t));
+        #elif __i386__
+        printf("clock_time()=%d,clock_time_t=%d", clock_time(), sizeof(clock_time_t));
+        #endif
         /* Wait for the periodic timer to expire and then restart the timer. */
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
         etimer_reset(&timer);
