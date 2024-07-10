@@ -181,7 +181,10 @@ ENDIF( wxWidgets_FOUND)
 
 # Generic compiler flags
 add_definitions(
-    -Os
+    # -Os
+    # -Os与 -finstrument-functions 冲突
+    -finstrument-functions
+    -include funtrace.h
     -DUNIX_HOST
     -Wcomment
     -Wno-unused-parameter
